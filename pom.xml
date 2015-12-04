@@ -6,7 +6,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>tsp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 
 	<name>tsp</name>
 	<description>talent search platform</description>
@@ -58,25 +58,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-social-linkedin</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+
+
 	</dependencies>
 	
 	<dependencyManagement>
 		<dependencies>
+		    <dependency>
+		        <groupId>${project.groupId}</groupId>
+		        <artifactId>tsp-ws</artifactId>
+		        <version>${project.version}</version>
+		    </dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-starter-parent</artifactId>
@@ -88,12 +80,20 @@
 	</dependencyManagement>
 	
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+    <resources>
+      <!-- tell maven to filter this directory to replace variables -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
 	</build>
 	
 	<repositories>
@@ -115,4 +115,7 @@
 		</repository>
 	</repositories>
 
+	<modules>
+		<module>tsp-ws</module>
+	</modules>
 </project>
