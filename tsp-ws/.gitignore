@@ -42,3 +42,4 @@ local.properties
 .springBeans
 /target/
 /WebContent/
+/data/
