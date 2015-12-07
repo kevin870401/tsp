@@ -50,11 +50,11 @@ public class ControllerConfig {
     @Bean
     public JiveRestService jiveRestService( 
         @Value("${sparklrTrustedMessageURL}") String sparklrTrustedMessageURL,
-        @Qualifier("sparklrRestTemplate") RestOperations sparklrRestTemplate,
+        @Qualifier("sparklrRedirectRestTemplate") RestOperations sparklrRedirectRestTemplate,
         @Qualifier("trustedClientRestTemplate") RestOperations trustedClientRestTemplate) {
       JiveRestService sparklrService = new JiveRestService();
         sparklrService.setSparklrTrustedMessageURL(sparklrTrustedMessageURL);
-        sparklrService.setSparklrRestTemplate(sparklrRestTemplate);
+        sparklrService.setSparklrRestTemplate(sparklrRedirectRestTemplate);
         sparklrService.setTrustedClientRestTemplate(trustedClientRestTemplate);
         return sparklrService;
     }
@@ -75,6 +75,9 @@ public class ControllerConfig {
         
         @Value("${oauth.client.secret}")
         private String oauthClientSecret;
+        
+        @Value("${oauth.predefined.redirectUrl}")
+        private String oauthPredefinedRedirectUrl;
         
         @Bean
         public OAuth2ProtectedResourceDetails sparklr() {
@@ -98,6 +101,7 @@ public class ControllerConfig {
             details.setUserAuthorizationUri(userAuthorizationUri);
             details.setScope(Arrays.asList("read", "write"));
             details.setUseCurrentUri(false);
+            //details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
             return details;
         }
 

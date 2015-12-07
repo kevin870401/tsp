@@ -43,11 +43,18 @@ public class LoginController {
   }
   */
   
-  @RequestMapping(value = "/people", method = GET, headers = "Accept=application/json")
+  @RequestMapping(value = "/authorization_code", method = GET, headers = "Accept=application/json")
   public ObjectNode jivePeople(){
     
     ObjectNode people = jiveRestService.getPeople();
     return people;
+    
+  }
+  
+  @RequestMapping(value = "/log", method = GET, headers = "Accept=application/json")
+  public String authorizationCode(){
+    
+    return "success";
     
   }
   
