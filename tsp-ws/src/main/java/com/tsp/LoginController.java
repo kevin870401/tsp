@@ -27,9 +27,9 @@ public class LoginController {
       resource.setScope(Arrays.asList("trust"));
       resource.setUserAuthorizationUri("https://otpp-2.jiveon.com/oauth2/authorize");
   }
-  
   private String projectUrl="https://otpp-2.jiveon.com/oauth2/authorize/?client_id=qin3ughkcg540aj47hjp590qg5g2g2g4.i&response_type=code";
-  private String tokenUrl="https://qin3ughkcg540aj47hjp590qg5g2g2g4.i:po8uy2jik8uusoxde4icidgn0wqjjnrx.s@otpp-2.jiveon.com/oauth2/token";
+  //private String tokenUrl="https://qin3ughkcg540aj47hjp590qg5g2g2g4.i:po8uy2jik8uusoxde4icidgn0wqjjnrx.s@otpp-2.jiveon.com/oauth2/token";
+  private String tokenUrl="http://otpp-2.jiveon.com/oauth2/token?client_id=qin3ughkcg540aj47hjp590qg5g2g2g4.i&client_secret=po8uy2jik8uusoxde4icidgn0wqjjnrx.s&grant_type=authorization_code&redirect_uri=http://localhost:8080/authorization_code";   
   /*@RequestMapping(value = "/login", method = GET, headers = "Accept=application/json")
   public View jiveAuthorize() {
     RedirectView redirect = new RedirectView(projectUrl);
@@ -50,6 +50,16 @@ public class LoginController {
     return people;
     
   }
+  
+  @RequestMapping(value = "/authorization_code_working", method = GET, headers = "Accept=application/json")
+  public View jiveAuth(@RequestParam("code") String code){
+    
+	    RedirectView redirect = new RedirectView(tokenUrl+"&code="+code);
+	    redirect.setExposeModelAttributes(false);
+	    return redirect;
+    
+  }
+  
   
   @RequestMapping(value = "/log", method = GET, headers = "Accept=application/json")
   public String authorizationCode(){

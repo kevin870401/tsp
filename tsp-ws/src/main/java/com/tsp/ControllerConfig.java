@@ -87,7 +87,7 @@ public class ControllerConfig {
             details.setClientSecret(oauthClientSecret);
             details.setAccessTokenUri(accessTokenUri);
             details.setUserAuthorizationUri(userAuthorizationUri);
-            details.setScope(Arrays.asList("read", "write"));
+            //details.setScope(Arrays.asList("read", "write"));
             return details;
         }
 
@@ -99,9 +99,10 @@ public class ControllerConfig {
             details.setClientSecret(oauthClientSecret);
             details.setAccessTokenUri(accessTokenUri);
             details.setUserAuthorizationUri(userAuthorizationUri);
-            details.setScope(Arrays.asList("read", "write"));
+            //details.setScope(Arrays.asList("read", "write"));
             details.setUseCurrentUri(false);
-            //details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
+            details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
+            details.setAuthenticationScheme(AuthenticationScheme.query);
             return details;
         }
 
