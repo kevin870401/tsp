@@ -21,11 +21,13 @@ public class JiveRestService {
   private String sparklrPhotoListURL;
   private String sparklrTrustedMessageURL;
   private String jivePeople="https://otpp-2.jiveon.com/api/core/v3/people/email/kevin_gu@otpp.com?fields=name";
+  private String testRest1="https://otpp-2.jiveon.com/api/core/v3/announcements?count=1&fields=publishDate,content,subject";
   private RestOperations sparklrRestTemplate;
   private RestOperations trustedClientRestTemplate;
 
   public ObjectNode getPeople() {
-    return this.sparklrRestTemplate.getForObject(URI.create(jivePeople), ObjectNode.class);
+    return this.sparklrRestTemplate.getForObject(URI.create(testRest1), ObjectNode.class);
+    //this.sparklrRestTemplate.
 }
   
   public List<String> getSparklrPhotoIds() {

@@ -29,8 +29,8 @@ public class TspApplication extends AbstractDispatcherServletInitializer impleme
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
-        registerProxyFilter(servletContext, "springSecurityFilterChain");
-        registerProxyFilter(servletContext, "oauth2ClientContextFilter");
+        //registerProxyFilter(servletContext, "springSecurityFilterChain");
+        //registerProxyFilter(servletContext, "oauth2ClientContextFilter");
     }
     
     private void registerProxyFilter(ServletContext servletContext, String name) {
