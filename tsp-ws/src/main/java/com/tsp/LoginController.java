@@ -23,7 +23,7 @@ public class LoginController {
   }
   @RequestMapping(value = "/authorization_code", method = GET, headers = "Accept=application/json")
   public String jiveAccessCode(@RequestParam("code") String code){
-    tokenUrl
+
     return code;
     
   }
