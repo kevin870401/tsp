@@ -1,6 +1,8 @@
 package com.tsp;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
@@ -22,6 +25,8 @@ import org.springframework.security.oauth2.common.AuthenticationScheme;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
+
+import com.tsp.interceptor.JiveRestResponseInterceptor;
 
 @Configuration
 public class ControllerConfig {
@@ -102,7 +107,7 @@ public class ControllerConfig {
             //details.setScope(Arrays.asList("read", "write"));
             details.setUseCurrentUri(false);
             details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
-            details.setAuthenticationScheme(AuthenticationScheme.query);
+            details.setAuthenticationScheme(AuthenticationScheme.header);
             return details;
         }
 
@@ -147,7 +152,11 @@ public class ControllerConfig {
 
         @Bean
         public OAuth2RestTemplate sparklrRedirectRestTemplate(OAuth2ClientContext clientContext) {
-            return new OAuth2RestTemplate(sparklrRedirect(), clientContext);
+        	OAuth2RestTemplate sparklrRedirectRestTemplate=new OAuth2RestTemplate(sparklrRedirect(), clientContext);
+        	List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>(); 
+        	interceptors.add(new JiveRestResponseInterceptor());
+        	sparklrRedirectRestTemplate.setInterceptors(interceptors);
+            return sparklrRedirectRestTemplate;
         }
 
         @Bean

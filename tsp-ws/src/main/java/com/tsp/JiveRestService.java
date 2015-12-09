@@ -3,6 +3,7 @@ package com.tsp;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +12,19 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.web.client.RestOperations;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
+@Slf4j
 public class JiveRestService {
   private String sparklrPhotoListURL;
   private String sparklrTrustedMessageURL;
@@ -25,10 +33,23 @@ public class JiveRestService {
   private RestOperations sparklrRestTemplate;
   private RestOperations trustedClientRestTemplate;
 
-  public ObjectNode getPeople() {
-    return this.sparklrRestTemplate.getForObject(URI.create(testRest1), ObjectNode.class);
-    //this.sparklrRestTemplate.
-}
+  public JsonNode getPeople() {
+	  String response = this.sparklrRestTemplate.getForObject(URI.create(testRest1), String.class);
+	  response = response.substring(response.indexOf("\n") + 1);
+	  ObjectMapper mapper = new ObjectMapper();
+	  JsonNode node = null;
+	  try {
+		  node= mapper.readTree(response);
+	} catch (JsonProcessingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	    
+    return node;
+  }
   
   public List<String> getSparklrPhotoIds() {
       try {

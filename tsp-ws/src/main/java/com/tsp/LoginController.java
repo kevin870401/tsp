@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.Arrays;
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.stereotype.Controller;
@@ -44,9 +45,9 @@ public class LoginController {
   */
   
   @RequestMapping(value = "/authorization_code", method = GET, headers = "Accept=application/json")
-  public ObjectNode jivePeople(){
+  public @ResponseBody JsonNode jivePeople(){
     
-    ObjectNode people = jiveRestService.getPeople();
+	  JsonNode people = jiveRestService.getPeople();
     return people;
     
   }
