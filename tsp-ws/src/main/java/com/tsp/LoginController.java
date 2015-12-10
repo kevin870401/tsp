@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.tsp.service.JiveRestService;
+
 @Controller
 public class LoginController {
   private JiveRestService jiveRestService;

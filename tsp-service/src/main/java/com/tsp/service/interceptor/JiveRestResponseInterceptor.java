@@ -1,4 +1,4 @@
-package com.tsp.interceptor;
+package com.tsp.service.interceptor;
 
 import java.io.IOException;
 
@@ -16,11 +16,10 @@ public class JiveRestResponseInterceptor implements ClientHttpRequestInterceptor
 	@Override	
 	public ClientHttpResponse intercept(HttpRequest request, byte[] body,
 			ClientHttpRequestExecution execution) throws IOException {
-		// TODO Auto-generated method stub
 		
 		ClientHttpResponse response = execution.execute(request, body); 
 		
-		log.info("JiveRestResponseInterceptor : "+response.getBody());		
+		log.info("JiveRestResponseInterceptor : "+response.getBody());
 		return response;
 	}
 
