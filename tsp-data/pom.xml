@@ -8,18 +8,17 @@
 		<artifactId>tsp</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>tsp-service</artifactId>
-	<name>tsp-service</name>
+	<artifactId>tsp-data</artifactId>
 	<packaging>jar</packaging>
+	<name>tsp-data</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>tsp-domain</artifactId>
-			<version>${project.version}</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>

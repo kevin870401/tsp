@@ -1,4 +1,4 @@
-package com.tsp.service.interceptor;
+package com.tsp.data.interceptor;
 
 import java.io.IOException;
 
