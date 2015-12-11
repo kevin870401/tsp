@@ -8,39 +8,18 @@
 		<artifactId>tsp</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>tsp-ws</artifactId>
+	<artifactId>tsp-domain</artifactId>
 	<packaging>jar</packaging>
-	<name>tsp-ws</name>
+	<name>tsp-domain</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>tsp-service</artifactId>
+			<artifactId>tsp-data</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -48,16 +27,32 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+			<artifactId>spring-boot</artifactId>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>1.4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 
+	</dependencies>
 	<build>
 		<resources>
+			<!-- standard Maven folder -->
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
+			</resource>
+			<!-- plus root folder -->
+			<resource>
+				<directory>.</directory>
+				<includes>
+					<include>META-INF/**</include>
+				</includes>
 			</resource>
 		</resources>
 	</build>
