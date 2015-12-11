@@ -42,8 +42,21 @@ public class JiveRestClientConfig {
   @Value("${oauth.predefined.redirectUrl}")
   private String oauthPredefinedRedirectUrl;
 
+  
+
   @Bean
-  public OAuth2ProtectedResourceDetails sparklrRedirect() {
+  public OAuth2ProtectedResourceDetails jiveResourceDetails() {
+      AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
+      details.setId("sparklr/tonr");
+      details.setClientId(oauthClientId);
+      details.setClientSecret(oauthClientSecret);
+      details.setAccessTokenUri(accessTokenUri);
+      details.setUserAuthorizationUri(userAuthorizationUri);
+      return details;
+  }
+  
+  @Bean
+  public OAuth2ProtectedResourceDetails jiveRedirectResourceDetails() {
     AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
     details.setId("sparklr/tonr-redirect");
     details.setClientId(oauthClientId);
@@ -53,14 +66,23 @@ public class JiveRestClientConfig {
     // not sure if scope needed to be set or not? or maybe for important resource this can
     // help oauth client avoid polluting data. => details.setScope(Arrays.asList("read", "write"));
     details.setUseCurrentUri(false);
-    details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
+    //details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
     details.setAuthenticationScheme(AuthenticationScheme.header);
     return details;
   }
 
   @Bean
-  public OAuth2RestTemplate sparklrRedirectRestTemplate(OAuth2ClientContext clientContext) {
-    OAuth2RestTemplate sparklrRedirectRestTemplate = new OAuth2RestTemplate(sparklrRedirect(), clientContext);
+  public OAuth2RestTemplate jiveRestTemplate(OAuth2ClientContext clientContext) {
+    OAuth2RestTemplate sparklrRedirectRestTemplate = new OAuth2RestTemplate(jiveResourceDetails(), clientContext);
+    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
+    interceptors.add(new JiveRestResponseInterceptor());
+    sparklrRedirectRestTemplate.setInterceptors(interceptors);
+    return sparklrRedirectRestTemplate;
+  }
+  
+  @Bean
+  public OAuth2RestTemplate jiveRedirectRestTemplate(OAuth2ClientContext clientContext) {
+    OAuth2RestTemplate sparklrRedirectRestTemplate = new OAuth2RestTemplate(jiveRedirectResourceDetails(), clientContext);
     List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
     interceptors.add(new JiveRestResponseInterceptor());
     sparklrRedirectRestTemplate.setInterceptors(interceptors);
@@ -69,9 +91,17 @@ public class JiveRestClientConfig {
 
 
   @Bean
-  public JiveRestClient jiveRestClient(@Qualifier("sparklrRedirectRestTemplate") RestOperations sparklrRedirectRestTemplate) {
+  public JiveRestClient jiveRestClient(@Qualifier("jiveRestTemplate") RestOperations jiveRestTemplate) {
     JiveRestClientImpl jiveRestClient = new JiveRestClientImpl();
-    jiveRestClient.setSparklrRestTemplate(sparklrRedirectRestTemplate);
+    jiveRestClient.setSparklrRestTemplate(jiveRestTemplate);
     return jiveRestClient;
   }
+  
+  @Bean
+  public JiveRestClient jiveRestClient2(@Qualifier("jiveRestTemplate") RestOperations jiveRestTemplate) {
+    JiveRestClientImpl jiveRestClient = new JiveRestClientImpl();
+    jiveRestClient.setSparklrRestTemplate(jiveRestTemplate);
+    return jiveRestClient;
+  }
+  
 }

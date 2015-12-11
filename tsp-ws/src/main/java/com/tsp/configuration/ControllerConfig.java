@@ -10,16 +10,19 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
-import com.tsp.service.JiveRestService;
+import com.tsp.service.JiveInboxService;
+import com.tsp.service.JivePeopleService;
 import com.tsp.LoginController;
 
 @Configuration
 public class ControllerConfig {
   
     @Autowired
-    JiveRestService jiveRestService;
+    JivePeopleService jivePeopleService;
   
-  
+    @Autowired
+    JiveInboxService jiveInboxService;
+    
     @Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();
@@ -34,9 +37,8 @@ public class ControllerConfig {
     }
     
     @Bean
-    public LoginController loginController(@Qualifier("jiveRestService") JiveRestService jiveRestService) {
-      LoginController controller = new LoginController();
-        controller.setJiveService(jiveRestService);
+    public LoginController loginController() {
+      LoginController controller = new LoginController(jivePeopleService,jiveInboxService);
         return controller;
     }
     

@@ -1,14 +1,13 @@
-package com.tsp.domain;
+package com.tsp.data.entity;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
-@ToString(includeFieldNames = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class JivePeople {
 	private long id;
 	private int followerCount;

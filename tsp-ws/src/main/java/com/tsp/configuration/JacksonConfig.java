@@ -1,4 +1,4 @@
-package com.tsp;
+package com.tsp.configuration;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;

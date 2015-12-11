@@ -1,6 +1,11 @@
 package com.tsp.data;
 
+import com.tsp.data.entity.JivePeople;
+
 public interface JiveRestClient {
-	public String getActivities();
-	public String getPeople(long id);
+  String getActivities();
+
+  JivePeople getPeople(long id);
+
+  String getInbox();
 }
