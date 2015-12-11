@@ -66,7 +66,7 @@ public class JiveRestClientConfig {
     // not sure if scope needed to be set or not? or maybe for important resource this can
     // help oauth client avoid polluting data. => details.setScope(Arrays.asList("read", "write"));
     details.setUseCurrentUri(false);
-    //details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
+    details.setPreEstablishedRedirectUri(oauthPredefinedRedirectUrl);
     details.setAuthenticationScheme(AuthenticationScheme.header);
     return details;
   }
@@ -98,9 +98,9 @@ public class JiveRestClientConfig {
   }
   
   @Bean
-  public JiveRestClient jiveRestClient2(@Qualifier("jiveRestTemplate") RestOperations jiveRestTemplate) {
+  public JiveRestClient jiveRestRedirectClient(@Qualifier("jiveRedirectRestTemplate") RestOperations jiveRedirectRestTemplate) {
     JiveRestClientImpl jiveRestClient = new JiveRestClientImpl();
-    jiveRestClient.setSparklrRestTemplate(jiveRestTemplate);
+    jiveRestClient.setSparklrRestTemplate(jiveRedirectRestTemplate);
     return jiveRestClient;
   }
   

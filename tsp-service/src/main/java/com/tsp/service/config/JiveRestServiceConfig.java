@@ -23,21 +23,21 @@ public class JiveRestServiceConfig {
   JiveRestClient jiveRestClient;
 
   @Autowired
-  @Qualifier("jiveRestClient2")
-  JiveRestClient jiveRestClient2;
+  @Qualifier("jiveRestRedirectClient")
+  JiveRestClient jiveRestRedirectClient;
 
   // TODO discuss if we want to directly expose this low level external
   // service as a bean which can be accessed by class in controller level
 
   @Bean
   public JivePeopleService jivePeopleService() {
-    JivePeopleServiceImpl jivePeopleService = new JivePeopleServiceImpl(jiveRestClient, jivePeopleMapper());
+    JivePeopleServiceImpl jivePeopleService = new JivePeopleServiceImpl(jiveRestRedirectClient, jivePeopleMapper());
     return jivePeopleService;
   }
 
   @Bean
   public JiveInboxService jiveInboxService() {
-    JiveInboxServiceImpl jiveDirectRestService = new JiveInboxServiceImpl(jiveRestClient2);
+    JiveInboxServiceImpl jiveDirectRestService = new JiveInboxServiceImpl(jiveRestClient);
     return jiveDirectRestService;
   }
   
