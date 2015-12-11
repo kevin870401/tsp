@@ -22,10 +22,6 @@ import com.tsp.service.JivePeopleService;
 public class LoginController {
 	private final JivePeopleService jivePeopleService;
 	private final JiveInboxService jiveInboxService;
-	private String projectUrl = "https://otpp-2.jiveon.com/oauth2/authorize/?client_id=qin3ughkcg540aj47hjp590qg5g2g2g4.i&response_type=code";
-	// private String
-	// tokenUrl="https://qin3ughkcg540aj47hjp590qg5g2g2g4.i:po8uy2jik8uusoxde4icidgn0wqjjnrx.s@otpp-2.jiveon.com/oauth2/token";
-	private String tokenUrl = "http://otpp-2.jiveon.com/oauth2/token?client_id=qin3ughkcg540aj47hjp590qg5g2g2g4.i&client_secret=po8uy2jik8uusoxde4icidgn0wqjjnrx.s&grant_type=authorization_code&redirect_uri=http://localhost:8080/authorization_code";
 
 	/*
 	 * @RequestMapping(value = "/login", method = GET, headers =
@@ -61,15 +57,6 @@ public class LoginController {
 			@RequestParam("id") long id) {
 		JivePeople people = jivePeopleService.getPeople(id);
 		return people;
-
-	}
-
-	@RequestMapping(value = "/authorization_code_working", method = GET, headers = "Accept=application/json")
-	public View jiveAuth(@RequestParam("code") String code) {
-
-		RedirectView redirect = new RedirectView(tokenUrl + "&code=" + code);
-		redirect.setExposeModelAttributes(false);
-		return redirect;
 
 	}
 
