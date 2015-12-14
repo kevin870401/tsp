@@ -319,7 +319,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SAMLDiscovery samlIDPDiscovery() {
         SAMLDiscovery idpDiscovery = new SAMLDiscovery();
-        idpDiscovery.setIdpSelectionPath("/main/login.jsp");
+
+        idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
+         //TODO in production we have a single jsp page for it
+        //idpDiscovery.setIdpSelectionPath("/main/login.jsp");
         return idpDiscovery;
     }
 
@@ -378,7 +381,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         resourceBackedMetadataProvider.setParserPool(parserPool());
         return resourceBackedMetadataProvider;
     }
+    @Bean(name = "resourceBackedMetadataProvider2")
+    @Qualifier("resourceBackedMetadataProvider2")
+    public ResourceBackedMetadataProvider resourceBackedMetadataProvider2() throws ResourceException, MetadataProviderException {
 
+        ResourceBackedMetadataProvider resourceBackedMetadataProvider = new ResourceBackedMetadataProvider(new Timer(), new ClasspathResource("/publicIdp.xml"));
+        resourceBackedMetadataProvider.setParserPool(parserPool());
+        return resourceBackedMetadataProvider;
+    }
     @Bean(name = "metadata")
     @Qualifier("metadata")
     public CachingMetadataManager metadata() throws MetadataProviderException, ResourceException {
@@ -386,7 +396,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
         ExtendedMetadataDelegate adfsMetadata = new ExtendedMetadataDelegate(resourceBackedMetadataProvider(), new ExtendedMetadata());
         adfsMetadata.setMetadataTrustCheck(false);
+        ExtendedMetadataDelegate adfsMetadata2 = new ExtendedMetadataDelegate(resourceBackedMetadataProvider2(), new ExtendedMetadata());
+        adfsMetadata2.setMetadataTrustCheck(false);
         providers.add(adfsMetadata);
+        providers.add(adfsMetadata2);
         return new CachingMetadataManager(providers);
     }
 
