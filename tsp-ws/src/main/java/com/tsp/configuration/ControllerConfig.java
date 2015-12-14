@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -20,6 +21,7 @@ import com.tsp.service.JivePeopleService;
 import com.tsp.CurrentUserHandlerMethodArgumentResolver;
 import com.tsp.LandingController;
 import com.tsp.LoginController;
+import com.tsp.SAMLUserDetailsServiceImpl;
 import com.tsp.SsoController;
 
 @Configuration
@@ -75,5 +77,6 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
         return landingController;
     }
     
+
     
 }
