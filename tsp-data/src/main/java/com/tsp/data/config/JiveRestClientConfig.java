@@ -42,7 +42,8 @@ public class JiveRestClientConfig {
   @Value("${oauth.predefined.redirectUrl}")
   private String oauthPredefinedRedirectUrl;
 
-  
+  @Value("${spark.resource.baseUrl}")
+  private String sparkResouceBaseUrl;
 
   @Bean
   public OAuth2ProtectedResourceDetails jiveResourceDetails() {
@@ -92,14 +93,14 @@ public class JiveRestClientConfig {
 
   @Bean
   public JiveRestClient jiveRestClient(@Qualifier("jiveRestTemplate") RestOperations jiveRestTemplate) {
-    JiveRestClientImpl jiveRestClient = new JiveRestClientImpl();
+    JiveRestClientImpl jiveRestClient = new JiveRestClientImpl(sparkResouceBaseUrl);
     jiveRestClient.setSparklrRestTemplate(jiveRestTemplate);
     return jiveRestClient;
   }
   
   @Bean
   public JiveRestClient jiveRestRedirectClient(@Qualifier("jiveRedirectRestTemplate") RestOperations jiveRedirectRestTemplate) {
-    JiveRestClientImpl jiveRestClient = new JiveRestClientImpl();
+    JiveRestClientImpl jiveRestClient = new JiveRestClientImpl(sparkResouceBaseUrl);
     jiveRestClient.setSparklrRestTemplate(jiveRedirectRestTemplate);
     return jiveRestClient;
   }

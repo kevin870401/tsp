@@ -283,7 +283,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler() {
 		SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-		successRedirectHandler.setDefaultTargetUrl("/");
+		successRedirectHandler.setDefaultTargetUrl("/authorization_code");
 		return successRedirectHandler;
 	}
 

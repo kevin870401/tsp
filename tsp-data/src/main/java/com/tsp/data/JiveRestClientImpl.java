@@ -15,8 +15,8 @@ import com.tsp.data.entity.JivePeople;
 @Slf4j
 public class JiveRestClientImpl implements JiveRestClient {
   // TODO refactor this using spring property files
-  private static final String jivePeople = "https://otpp-2.jiveon.com/api/core/v3/people/";
-  private static final String inboxUrl = "https://otpp-2.jiveon.com/api/core/v3/inbox";
+  private static final String jivePeople = "/people/";
+  private static final String inboxUrl = "/inbox";
   // https://otpp-2.jiveon.com/api/core/v3/people/email/kevin_gu@otpp.com?fields=name
   // should we use this to do search?
   private static final String testRest1 = "https://otpp-2.jiveon.com/api/core/v3/people/52105/activities";
@@ -25,8 +25,15 @@ public class JiveRestClientImpl implements JiveRestClient {
   private RestOperations sparklrRestTemplate;
 
   private ObjectMapper mapper = new ObjectMapper();
+  
+  private String jiveResourceBaseUrl;
+  
 
-  public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
+  public JiveRestClientImpl(String sparkResouceBaseUrl) {
+	  jiveResourceBaseUrl=sparkResouceBaseUrl;
+}
+
+public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
     this.sparklrRestTemplate = sparklrRestTemplate;
   }
 
@@ -39,8 +46,24 @@ public class JiveRestClientImpl implements JiveRestClient {
   }
 
   @Override
+  public String postDiscussion() {
+    String response = this.sparklrRestTemplate.getForObject(URI.create(testRest1), String.class);
+    response = response.substring(response.indexOf("\n") + 1);
+    log.debug("getActivities: " + response);
+    return response;
+  }
+  
+  @Override
+  public JiveDiscussion getDiscussion() {
+    String response = this.sparklrRestTemplate.getForObject(URI.create(testRest1), String.class);
+    response = response.substring(response.indexOf("\n") + 1);
+    log.debug("getActivities: " + response);
+    return response;
+  }
+  
+  @Override
   public JivePeople getPeople(long id) {
-    String response = getResponse(jivePeople.concat(String.valueOf(id)));
+    String response = getResponse(jiveResourceBaseUrl.concat(jivePeople.concat(String.valueOf(id))));
     JivePeople people = null;
     try {
       people = mapper.readValue(response, JivePeople.class);
@@ -56,7 +79,7 @@ public class JiveRestClientImpl implements JiveRestClient {
 
   @Override
   public String getInbox() {
-    String response = getResponse(inboxUrl);
+    String response = getResponse(jiveResourceBaseUrl.concat(inboxUrl));
     return response;
   }
 

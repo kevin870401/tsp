@@ -31,7 +31,7 @@ public class SsoController {
     public String idpSelection(HttpServletRequest request, Model model) {
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             LOG.warn("The current user is already logged.");
-            return "redirect:/landing";
+            return "redirect:/authorization_code";
         } else {
             if (isForwarded(request)) {
                 Set<String> idps = metadata.getIDPEntityNames();
@@ -49,7 +49,7 @@ public class SsoController {
     public String idpSelection2(HttpServletRequest request, Model model) {
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
             LOG.warn("The current user is already logged.");
-            return "redirect:/landing";
+            return "redirect:/authorization_code";
         } else {
             if (isForwarded(request)) {
                 Set<String> idps = metadata.getIDPEntityNames();
