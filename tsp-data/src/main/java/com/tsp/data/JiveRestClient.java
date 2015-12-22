@@ -1,5 +1,6 @@
 package com.tsp.data;
 
+import com.tsp.data.entity.JiveEvent;
 import com.tsp.data.entity.JivePeople;
 
 public interface JiveRestClient {
@@ -8,4 +9,6 @@ public interface JiveRestClient {
   JivePeople getPeople(long id);
 
   String getInbox();
+
+JiveEvent getEvent(long id);
 }

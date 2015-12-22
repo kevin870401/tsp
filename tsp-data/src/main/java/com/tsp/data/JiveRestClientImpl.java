@@ -10,12 +10,14 @@ import org.springframework.web.client.RestOperations;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tsp.data.entity.JiveEvent;
 import com.tsp.data.entity.JivePeople;
 
 @Slf4j
 public class JiveRestClientImpl implements JiveRestClient {
   // TODO refactor this using spring property files
   private static final String jivePeople = "/people/";
+  private static final String jiveContent = "/contents/";
   private static final String inboxUrl = "/inbox";
   // https://otpp-2.jiveon.com/api/core/v3/people/email/kevin_gu@otpp.com?fields=name
   // should we use this to do search?
@@ -44,21 +46,21 @@ public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
     log.debug("getActivities: " + response);
     return response;
   }
-
-  @Override
-  public String postDiscussion() {
-    String response = this.sparklrRestTemplate.getForObject(URI.create(testRest1), String.class);
-    response = response.substring(response.indexOf("\n") + 1);
-    log.debug("getActivities: " + response);
-    return response;
-  }
   
   @Override
-  public JiveDiscussion getDiscussion() {
-    String response = this.sparklrRestTemplate.getForObject(URI.create(testRest1), String.class);
-    response = response.substring(response.indexOf("\n") + 1);
-    log.debug("getActivities: " + response);
-    return response;
+  public JiveEvent getEvent(long id) {
+	    String response = getResponse(jiveResourceBaseUrl.concat(jiveContent.concat(String.valueOf(id))));
+	    JiveEvent event = null;
+	    try {
+	    	event = mapper.readValue(response, JiveEvent.class);
+	    } catch (JsonParseException e) {// TODO don't eat these exceptions
+	      log.error(e.getMessage());
+	    } catch (JsonMappingException e) {
+	      log.error(e.getMessage());
+	    } catch (IOException e) {
+	      log.error(e.getMessage());
+	    }
+	    return event;
   }
   
   @Override

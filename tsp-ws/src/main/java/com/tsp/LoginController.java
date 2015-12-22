@@ -25,7 +25,6 @@ import com.tsp.stereotypes.CurrentUser;
 public class LoginController {
   private final JivePeopleService jivePeopleService;
   private final JiveInboxService jiveInboxService;
-
   /*
    * @RequestMapping(value = "/login", method = GET, headers = "Accept=application/json") public
    * View jiveAuthorize() { RedirectView redirect = new RedirectView(projectUrl);
@@ -60,7 +59,6 @@ public class LoginController {
     return people;
 
   }
-
 
 
 }

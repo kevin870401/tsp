@@ -16,9 +16,11 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
+import com.tsp.service.JiveEventService;
 import com.tsp.service.JiveInboxService;
 import com.tsp.service.JivePeopleService;
 import com.tsp.CurrentUserHandlerMethodArgumentResolver;
+import com.tsp.JiveEventController;
 import com.tsp.LandingController;
 import com.tsp.LoginController;
 import com.tsp.SAMLUserDetailsServiceImpl;
@@ -30,6 +32,9 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
     @Autowired
     JivePeopleService jivePeopleService;
   
+    @Autowired
+    JiveEventService jiveEventService;
+    
     @Autowired
     JiveInboxService jiveInboxService;
     @Autowired
@@ -62,6 +67,12 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
     @Bean
     public LoginController loginController() {
       LoginController controller = new LoginController(jivePeopleService,jiveInboxService);
+        return controller;
+    }
+    
+    @Bean
+    public JiveEventController jiveEventController() {
+    	JiveEventController controller = new JiveEventController(jiveEventService);
         return controller;
     }
  

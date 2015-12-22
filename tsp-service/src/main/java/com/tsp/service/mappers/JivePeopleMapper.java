@@ -1,7 +1,5 @@
 package com.tsp.service.mappers;
 
-import com.tsp.data.entity.JivePeople;
-
 import ma.glasnost.orika.MapperFactory;
 
 public class JivePeopleMapper extends DefaultMapper<com.tsp.domain.JivePeople, com.tsp.data.entity.JivePeople> {
