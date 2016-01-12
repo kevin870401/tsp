@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.tsp.data.entity.JiveEvent;
 import com.tsp.data.entity.JivePeople;
+import com.tsp.data.entity.JiveTextContent;
 
 public class JiveEventDeserializer extends JsonDeserializer <JiveEvent>{
 	  private ObjectMapper mapper = new ObjectMapper();
@@ -32,9 +33,14 @@ public class JiveEventDeserializer extends JsonDeserializer <JiveEvent>{
 		result.setPublished(mapper.convertValue(node.get("published"), DateTime.class));
 		result.setStartDate(mapper.convertValue(node.get("startDate"), DateTime.class));
 		result.setEndDate(mapper.convertValue(node.get("endDate"), DateTime.class));
-		JsonNode jn= node.get("author");
-	     JivePeople author = mapper.convertValue(jn, JivePeople.class);
+		JsonNode authorNode= node.get("author");
+	    JivePeople author = mapper.convertValue(authorNode, JivePeople.class);
 		result.setAuthor(author);
+		
+		JsonNode contentNode= node.get("content");
+		JiveTextContent cotent = mapper.convertValue(contentNode, JiveTextContent.class);
+		
+		result.setContent(cotent);
 		return result;
 	}
 

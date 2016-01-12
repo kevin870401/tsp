@@ -1,8 +1,8 @@
 package com.tsp.domain;
+
 import org.joda.time.DateTime;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tsp.data.entity.JivePeople;
 
 import lombok.Data;
@@ -15,12 +15,14 @@ public class JiveEvent {
 	private long contentID;
 	private String subject;
 	private JivePeople author;
-	private String type;//TODO enum or object
-	private String status;//TODO enum or object
-	//@JsonSerialize(using=DateTimeSerializer.class)
+	private String type;// TODO enum or object
+	private String status;// TODO enum or object
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private DateTime startDate;
-	//@JsonSerialize(using=DateTimeSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private DateTime endDate;
-	//@JsonSerialize(using=DateTimeSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private DateTime published;
+	
+	private JiveTextContent content;
 }

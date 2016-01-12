@@ -24,4 +24,5 @@ public class JiveEvent {
 	private DateTime startDate;
 	private DateTime endDate;
 	private DateTime published;
+	private JiveTextContent content;
 }
