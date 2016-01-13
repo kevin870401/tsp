@@ -28,7 +28,7 @@ import com.tsp.data.interceptor.JiveRestResponseInterceptor;
 public class JiveRestClientConfig {
 
   @Value("${oauth.accessToken.uri}")
-  private String accessTokenUri;
+  public String accessTokenUri;
 
   @Value("${oauth.userAuthorization.uri}")
   private String userAuthorizationUri;

@@ -8,7 +8,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
-@Slf4j
+//@Slf4j
 public class JiveRestResponseInterceptor implements ClientHttpRequestInterceptor {
 
 
@@ -19,7 +19,7 @@ public class JiveRestResponseInterceptor implements ClientHttpRequestInterceptor
 		
 		ClientHttpResponse response = execution.execute(request, body); 
 		
-		log.info("JiveRestResponseInterceptor : "+response.getBody());
+		//log.info("JiveRestResponseInterceptor : "+response.getBody());
 		return response;
 	}
 

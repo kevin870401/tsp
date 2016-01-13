@@ -1,5 +1,6 @@
 package com.tsp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import javax.inject.Inject;
 import java.util.ResourceBundle;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -15,10 +15,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Controller
 public class HealthController {
 
-    @Inject
+    @Autowired
     private RestTemplate restTemplate;
 
-    @Inject
+    @Autowired
     private HttpEntity<String> jsonRequestEntity;
 
     private final static String RESOURCE_BUNDLE_NAME = "mvnbuild";

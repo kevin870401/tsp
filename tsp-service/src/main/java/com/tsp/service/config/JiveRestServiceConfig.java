@@ -1,5 +1,7 @@
 package com.tsp.service.config;
 
+import com.tsp.service.*;
+import com.tsp.service.mappers.JiveDirectMessageMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 
@@ -9,12 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.tsp.data.JiveRestClient;
-import com.tsp.service.JiveEventService;
-import com.tsp.service.JiveEventServiceImpl;
-import com.tsp.service.JiveInboxService;
-import com.tsp.service.JiveInboxServiceImpl;
-import com.tsp.service.JivePeopleService;
-import com.tsp.service.JivePeopleServiceImpl;
 import com.tsp.service.mappers.JiveEventMapper;
 import com.tsp.service.mappers.JivePeopleMapper;
 
@@ -43,7 +39,13 @@ public class JiveRestServiceConfig {
     JiveEventServiceImpl jiveEventService = new JiveEventServiceImpl(jiveRestRedirectClient, jiveEventMapper());
     return jiveEventService;
   }
-  
+
+  @Bean
+  public JiveDirectMessageService jiveDirectMessageService() {
+    JiveDirectMessageServiceImpl jiveDirectMessageService = new JiveDirectMessageServiceImpl(jiveRestRedirectClient, jiveDirectMessageMapper());
+    return jiveDirectMessageService;
+  }
+
   @Bean
   public JiveInboxService jiveInboxService() {
     JiveInboxServiceImpl jiveDirectRestService = new JiveInboxServiceImpl(jiveRestClient);
@@ -59,7 +61,12 @@ public class JiveRestServiceConfig {
   public JiveEventMapper jiveEventMapper() {
     return new JiveEventMapper(defaultMapperFactory());
   }
-  
+
+  @Bean
+  public JiveDirectMessageMapper jiveDirectMessageMapper() {
+    return new JiveDirectMessageMapper(defaultMapperFactory());
+  }
+
   @Bean
   public MapperFactory defaultMapperFactory() {
     return new DefaultMapperFactory.Builder().build();

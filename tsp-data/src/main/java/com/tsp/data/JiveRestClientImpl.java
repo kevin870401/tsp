@@ -3,6 +3,7 @@ package com.tsp.data;
 import java.io.IOException;
 import java.net.URI;
 
+import com.tsp.data.entity.JiveDirectMessage;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.client.RestOperations;
@@ -13,11 +14,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsp.data.entity.JiveEvent;
 import com.tsp.data.entity.JivePeople;
 
-@Slf4j
+//@Slf4j
 public class JiveRestClientImpl implements JiveRestClient {
   // TODO refactor this using spring property files
   private static final String jivePeople = "/people/";
   private static final String jiveContent = "/contents/";
+  private static final String jiveDms = "/dms/";
   private static final String inboxUrl = "/inbox";
   // https://otpp-2.jiveon.com/api/core/v3/people/email/kevin_gu@otpp.com?fields=name
   // should we use this to do search?
@@ -43,7 +45,7 @@ public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
   public String getActivities() {
     String response = this.sparklrRestTemplate.getForObject(URI.create(testRest1), String.class);
     response = response.substring(response.indexOf("\n") + 1);
-    log.debug("getActivities: " + response);
+    //log.debug("getActivities: " + response);
     return response;
   }
   
@@ -54,15 +56,31 @@ public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
 	    try {
 	    	event = mapper.readValue(response, JiveEvent.class);
 	    } catch (JsonParseException e) {// TODO don't eat these exceptions
-	      log.error(e.getMessage());
+	      //log.error(e.getMessage());
 	    } catch (JsonMappingException e) {
-	      log.error(e.getMessage());
+	      //log.error(e.getMessage());
 	    } catch (IOException e) {
-	      log.error(e.getMessage());
+	      //log.error(e.getMessage());
 	    }
 	    return event;
   }
-  
+
+  @Override
+  public JiveDirectMessage getDirectMessage(long id) {
+    String response = getResponse(jiveResourceBaseUrl.concat(jiveDms.concat(String.valueOf(id))));
+    JiveDirectMessage jiveDirectMessage = null;
+    try {
+      jiveDirectMessage = mapper.readValue(response, JiveDirectMessage.class);
+    } catch (JsonParseException e) {// TODO don't eat these exceptions
+      //log.error(e.getMessage());
+    } catch (JsonMappingException e) {
+      //log.error(e.getMessage());
+    } catch (IOException e) {
+      //log.error(e.getMessage());
+    }
+    return jiveDirectMessage;
+  }
+
   @Override
   public JivePeople getPeople(long id) {
     String response = getResponse(jiveResourceBaseUrl.concat(jivePeople.concat(String.valueOf(id))));
@@ -70,11 +88,11 @@ public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
     try {
       people = mapper.readValue(response, JivePeople.class);
     } catch (JsonParseException e) {// TODO don't eat these exceptions
-      log.error(e.getMessage());
+      //log.error(e.getMessage());
     } catch (JsonMappingException e) {
-      log.error(e.getMessage());
+      //log.error(e.getMessage());
     } catch (IOException e) {
-      log.error(e.getMessage());
+      //log.error(e.getMessage());
     }
     return people;
   }
@@ -90,7 +108,7 @@ public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
   private String getResponse(String uri) {
     String response = this.sparklrRestTemplate.getForObject(URI.create(uri), String.class);
     response = response.substring(response.indexOf("\n") + 1);
-    log.debug("getResponse: " + response);
+    //log.debug("getResponse: " + response);
     return response;
   }
 

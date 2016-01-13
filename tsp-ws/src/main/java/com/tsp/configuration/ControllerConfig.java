@@ -2,6 +2,8 @@ package com.tsp.configuration;
 
 import java.util.List;
 
+import com.tsp.*;
+import com.tsp.service.JiveDirectMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,12 +21,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import com.tsp.service.JiveEventService;
 import com.tsp.service.JiveInboxService;
 import com.tsp.service.JivePeopleService;
-import com.tsp.CurrentUserHandlerMethodArgumentResolver;
-import com.tsp.JiveEventController;
-import com.tsp.LandingController;
-import com.tsp.LoginController;
-import com.tsp.SAMLUserDetailsServiceImpl;
-import com.tsp.SsoController;
 
 @Configuration
 public class ControllerConfig extends WebMvcConfigurerAdapter {
@@ -34,7 +30,10 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
   
     @Autowired
     JiveEventService jiveEventService;
-    
+
+    @Autowired
+    JiveDirectMessageService jiveDirectMessageService;
+
     @Autowired
     JiveInboxService jiveInboxService;
     @Autowired
@@ -75,7 +74,13 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
     	JiveEventController controller = new JiveEventController(jiveEventService);
         return controller;
     }
- 
+
+    @Bean
+    public JiveDirectMessageController jiveDirectMessageController() {
+        JiveDirectMessageController controller = new JiveDirectMessageController(jiveDirectMessageService);
+        return controller;
+    }
+
     @Bean
     public SsoController ssoController() {
       SsoController ssoController = new SsoController();

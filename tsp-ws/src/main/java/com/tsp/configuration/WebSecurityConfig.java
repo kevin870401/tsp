@@ -372,7 +372,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// not sure we need to set entityBaseURL or not, websphere in production
 		// may not even know the production domain url is. this will force to
 		// set the domain url as entity end point url.
-		metadataGenerator.setEntityBaseURL("https://localhost:8443");
+		metadataGenerator.setEntityBaseURL("http://localhost:8080");
 		return metadataGenerator;
 	}
     @Bean
