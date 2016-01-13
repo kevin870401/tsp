@@ -1,9 +1,13 @@
 package com.tsp.domain;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tsp.data.entity.JivePeople;
+
 import lombok.Data;
 import lombok.ToString;
+
 import org.joda.time.DateTime;
 
 @Data
@@ -23,4 +27,5 @@ public class JiveDirectMessage {
 	private DateTime published;
 	
 	private JiveTextContent content;
+	private List<JivePeople> participants;
 }
