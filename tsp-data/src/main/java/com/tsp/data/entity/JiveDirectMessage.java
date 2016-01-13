@@ -3,14 +3,14 @@ package com.tsp.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.tsp.data.entity.serializer.JiveEventDeserializer;
-import com.tsp.data.entity.serializer.JiveEventSerializer;
+import com.tsp.data.entity.serializer.JiveDirectMessageDeserializer;
+import com.tsp.data.entity.serializer.JiveDirectMessageSerializer;
 import lombok.Data;
 import org.joda.time.DateTime;
 
 @Data
-@JsonSerialize(using=JiveEventSerializer.class)
-@JsonDeserialize(using=JiveEventDeserializer.class)
+@JsonSerialize(using=JiveDirectMessageSerializer.class)
+@JsonDeserialize(using=JiveDirectMessageDeserializer.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JiveDirectMessage {
 	private long id;
